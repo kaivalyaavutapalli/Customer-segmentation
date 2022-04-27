@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-
-
 import pandas as pd
  
 from Clustering import *
@@ -10,33 +8,59 @@ from Clustering import *
 
 class Analysis:
     
-    df = pd.read_csv(r'"C:\Desktop\programming\New folder1\Mall_Customers.csv"')
     
-    # updating columns with null values to 0
-    df=df.fillna(0)
+    def mall_customers():
 
-    # Converting categorical data to numeric
-    df['Gender']=df['Gender'].replace(['Male', 'Female'],[0,1])
+        DataFrame = pd.read_csv('.\Mall_Customers.csv')
+        print(DataFrame.head(5))
+       
+        # updating columns with null values to 0
+        DataFrame=DataFrame.fillna(0)
+        
+        # Converting categorical data to numeric
+        DataFrame['Gender']=DataFrame['Gender'].replace(['Male', 'Female'],[0,1])
     
-    # Range of Clusters should be specified
-    min_range=2
-    max_range=10
+       # Specify range for clusters as  min_range and max_range
+        min_range=2
+        max_range=10
+        
+        # creating object for Clustering class
+        obj1= Clustering(DataFrame,min_range,max_range)
+        
+        #invoking visualizations function for visualizing the bar plots of customer data
+        obj1.visualizations('Age')
+        obj1.visualizations('Spending Score (1-100)')
+        obj1.visualizations('Annual Income (k$)')
+        
+        # invoking kmeans function to calculate the inertia score of clusters and append the score to a list
+        inertia_Score= obj1.kmeans()
+        
+        # invoking print_clusters to print the cluster
+        obj1.print_clusters()
     
-    obj1= Clustering(df,min_range,max_range)
-    
-    # Specify range for clusters as  min_range and max_range
-    
-    obj1.kmeans()
-    
-    var1=obj1.calculate_wcss() 
-    var2=obj1.optimal_number_of_clusters(var1)
-    print("Number of optimal clusters is : "+ str(var2))
-   
-    obj1.ClusterModel1("Annual Income (k$)","Age")
-    obj1.ClusterModel1("Age","Spending Score (1-100)")
-    obj1.ClusterModel1("Annual Income (k$)","Spending Score (1-100)")
-    
-
-    
-
-    
+        # invoking optimal_number_of_clusters method to calculate the optimal clusters
+        Optimal_Clusters=obj1.optimal_number_of_clusters(inertia_Score)
+        print("Number of optimal clusters is : "+ str(Optimal_Clusters))
+        
+        # invoking clustermodel1 with different combinations of data for segmentation
+        obj1.ClusterModel1()
+        
+        # specify the number of components for cluster model2
+        components_Count=4
+        
+        # invoking clustermodel2 for segmentation
+        obj1.ClusterModel2(components_Count)
+        
+        # columns to be selected for displaying the clusters
+        component1="Age"
+        component2="Annual Income (k$)"
+        component3= "Spending Score (1-100)"
+        
+        # printing clusters
+        obj1.plots_Clusters(component1,component2,component3)
+        
+        # printing bar plots for analysis
+        obj1.plots_Analysis(component1,component2,component3)
+        
+    # invoking mall_customers function for segmentation of mall customers    
+    mall_customers()

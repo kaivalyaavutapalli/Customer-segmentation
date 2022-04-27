@@ -22,30 +22,24 @@ We have used two datasets as test cases to our package:
 
 # Walk-through of the code:
 
-Two classes have been created here: 1) Analysis 2) Clustering. The Analysis class has all the functions of the Clustering class which
-when invoked, performs aall the functionalities of the K-means algorithm. In order to begin the process of customer segmentation, a 
-dataset will be given by the user in the Analysis class wich will be converted to a dataframe. In this class, Data Preprocessing step
-takes place, where if any null values are present in the dataset, the fillna() function will convert all the null values in the dataset 
-to 0 and updates the dataset. Also,categorical data in the dataset are replaced by integer values in the dataset using the replace()
-function. The user can select the  number of clusters he/she requires by giving the minimum and maximum range of clusters. To display
-the clustering models, we call the functions clusteringmodel1() and clusteringmodel2() functions and the user gives the attriutes of the 
-dataset according to which segmentation is performed. There are other functions in the Analysis class which play a vital role in performing
-the segmentation. These functions are:
-### k-means() 
-This function accepts the range of clusters given by the user and calculates the inertia score of the points and accordingly
-displays the plots of the clusters.
-### calculate_wcss()
- This function calculates Within-clusters-sum of-squares, which is the sum of the squared distance between the centroid
-of the clusters and the points and appends the scores to a list.
-### Optimal_number_of_clusters()
- This function takes a list containing the within clusters sum-of-squares for each 
-number of clusters that we calculated using the calculate_wcss() method, and as a result, it gives back the optimal number of clusters. 
-### clusteringmodel1()
- This function does the segmentation based on the optimal number of clusters and takes in two columns of the dataset
- given by the user to display the clusters.
-### clusteringmodel2()
-This function does the segmentation based on PCA (Principle Component Analysis) technique to reduce the dimensions of the dataset.
-The reduced dimensions explain the maximum variance in the model.The two components which have the highest variance will be used to generate the clusters 
-and be displayed. 
-###  
-Based on the silhoutte score of the models, the model with highest silhoutte score will be used to interpret the different customer segments.
+The overall purpose of this package is to implement ‘Customer Segmentation using K-means Algorithm’. This package fulfills the purpose of segmenting customers into groups or clusters and this clustering is done based on customers having similar characteristics which include geography, behavioral, customer content etc. There are two modules in this package: 1) Main 2) Clustering.
+Main module has a class named Analysis where the user fits in his/her dataset for implementing segmentation. Clustering module has a class named Clustering where all the functions of segmentation have been implemented. In Clustering class, there are functions like kmeans(), clusteringmodel1(), clusteringmodel2(), plots_clusters()  which are quite vital in the program without which the purpose of the package is lost, since kmeans() is used for implementing the K-means algorithm, clusteringmodel1() and clusteringmodel2() functions are used for implementing two different models of creating the clusters and plots_clusters() is a function where both the clustering methods are compared and the plot of the better and optimal clustering method is displayed.
+Analysis class, in Main module, consists of mall_customers() function which invokes all the functions from Clustering class in Clustering module. Clustering class, in Clustering module, consists of the following functions:
+###__init__() 
+ Initializes the clustering class with given dataframe and range of clusters.
+###visualizations ()
+ This function prints the distribution plot of the attribute passed as a parameter to this function. Ex: Spending Score
+###kmeans ()
+ This function takes a dataframe as input and calculates the inertia scores for data points and returns a list containing those inertia scores.
+###print_clusters()
+ This function prints the cluster points and their respective inertia scores.
+###optimal_number_of_clusters()
+ Calculates the optimal number of clusters by using inertia scores as parameter and returns the optimal number of clusters.
+###ClusterModel1()
+ This function uses the output of kmeans (), builds a model for segmentation and the silhouette score of this model is calculated.
+###ClusterModel2()
+ This function uses Principal Component Analysis, builds a model for segmentation and the silhouette score of this model is calculated.
+###plots_Clusters()
+ This function compares the silhouette score of both the cluster models and prints the clusters of the model with highest silhouette score.
+###plots_Analysis()
+ This function compares the silhouette score of both the cluster models and prints bar plots for cluster analysis.
