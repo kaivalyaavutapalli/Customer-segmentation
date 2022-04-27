@@ -25,21 +25,21 @@ We have used two datasets as test cases to our package:
 The overall purpose of this package is to implement ‘Customer Segmentation using K-means Algorithm’. This package fulfills the purpose of segmenting customers into groups or clusters and this clustering is done based on customers having similar characteristics which include geography, behavioral, customer content etc. There are two modules in this package: 1) Main 2) Clustering.
 Main module has a class named Analysis where the user fits in his/her dataset for implementing segmentation. Clustering module has a class named Clustering where all the functions of segmentation have been implemented. In Clustering class, there are functions like kmeans(), clusteringmodel1(), clusteringmodel2(), plots_clusters()  which are quite vital in the program without which the purpose of the package is lost, since kmeans() is used for implementing the K-means algorithm, clusteringmodel1() and clusteringmodel2() functions are used for implementing two different models of creating the clusters and plots_clusters() is a function where both the clustering methods are compared and the plot of the better and optimal clustering method is displayed.
 Analysis class, in Main module, consists of mall_customers() function which invokes all the functions from Clustering class in Clustering module. Clustering class, in Clustering module, consists of the following functions:
-###__init__() 
+### __init__() 
  Initializes the clustering class with given dataframe and range of clusters.
-###visualizations ()
+### visualizations ()
  This function prints the distribution plot of the attribute passed as a parameter to this function. Ex: Spending Score
-###kmeans ()
+### kmeans ()
  This function takes a dataframe as input and calculates the inertia scores for data points and returns a list containing those inertia scores.
-###print_clusters()
+### print_clusters()
  This function prints the cluster points and their respective inertia scores.
-###optimal_number_of_clusters()
+### optimal_number_of_clusters()
  Calculates the optimal number of clusters by using inertia scores as parameter and returns the optimal number of clusters.
-###ClusterModel1()
+### ClusterModel1()
  This function uses the output of kmeans (), builds a model for segmentation and the silhouette score of this model is calculated.
-###ClusterModel2()
+### ClusterModel2()
  This function uses Principal Component Analysis, builds a model for segmentation and the silhouette score of this model is calculated.
-###plots_Clusters()
+### plots_Clusters()
  This function compares the silhouette score of both the cluster models and prints the clusters of the model with highest silhouette score.
-###plots_Analysis()
+### plots_Analysis()
  This function compares the silhouette score of both the cluster models and prints bar plots for cluster analysis.
