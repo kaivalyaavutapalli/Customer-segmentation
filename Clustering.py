@@ -48,8 +48,8 @@ class Clustering:
         returns: None
         
         """
-        
-        sns.distplot(self.dataFrame[component_Name],color= 'blue',bins=20)
+        # distibution plot for attributes of dataset
+        sns.displot(self.dataFrame[component_Name],color= 'green')
         plt.title('distribution plot', fontsize = 15)
         plt.xlabel(component_Name, fontsize = 12)
         plt.ylabel('Count', fontsize = 12)
@@ -91,6 +91,7 @@ class Clustering:
         maximumRange = self.max_Range
         inertiaScore= self.kmeans()
         
+        # plotting the clusters and their respective inertia score
         plt.figure(1,figsize = (10 ,8))
         plt.plot(np.arange(minimumRange , maximumRange) , inertiaScore , '-' ,marker='o', alpha = 0.5)
         plt.xlabel('Number of Clusters') , plt.ylabel('Inertia score')
@@ -133,13 +134,17 @@ class Clustering:
         sum_of_Squares = self.kmeans()
         optimal_clusters = self.optimal_number_of_clusters(sum_of_Squares)
         
+        # Clustering using kmeans
         kmeans = KMeans(n_clusters= optimal_clusters, init ='k-means++', max_iter=300, n_init=10,random_state=0 )
         kmeans.fit(self.dataFrame)
         
         clusters = kmeans.fit_predict(self.dataFrame)
         self.clusters_Model1=clusters
-        
+
+        # mapping back clusters to dataframe
         self.prediction_Model1 = kmeans.fit_predict(self.dataFrame.iloc[:,1:])
+        
+        # Calculating the silhouette score of model 1
         self.silhouette_Model1 =silhouette_score(self.dataFrame, kmeans.labels_, metric='euclidean')
         
         
@@ -158,6 +163,7 @@ class Clustering:
         principal_Components = components_Count.fit_transform(self.dataFrame)
         features = range(components_Count.n_components_)
         
+        # Plotting the variance of features
         plt.bar(features, components_Count.explained_variance_ratio_, color='black')
         plt.xlabel('PCA features')
         plt.ylabel('variance %')
@@ -168,6 +174,8 @@ class Clustering:
         range_Count = range( min_range, max_range)
         
         inertias = []
+        
+        # Clustering using kmeans 
         for k in range_Count:
             model = KMeans(n_clusters=k)
             model.fit(PCA_components.iloc[:,:2])
@@ -179,7 +187,11 @@ class Clustering:
         clusters = model.fit_predict(PCA_components.iloc[:,:2])
         
         self.clusters_Model2=clusters
+        
+        # Calculating the silhouette score of model 1
         self.silhouette_Model2=silhouette_score(PCA_components.iloc[:,:2], model.labels_, metric='euclidean')
+                
+        # mapping back clusters to dataframe
         self.prediction_Model2 = model.predict(PCA_components.iloc[:,:2])
         
     
@@ -190,6 +202,7 @@ class Clustering:
         input: cluster model
         returns: None
         """
+        # comparing the silhouette score
         if(self.silhouette_Model1 < self. silhouette_Model2):
            
             print("Cluster Model 2")
@@ -199,7 +212,8 @@ class Clustering:
            
            print("cluster model1") 
            self.dataFrame["label"] = self.clusters_Model1
-           
+        
+        # Plotting the clusters   
         fig = plt.figure(figsize=(21,10))
         plot = fig.add_subplot(111, projection='3d')
         plot.scatter(self.dataFrame[component1][self.dataFrame.label == 0], self.dataFrame[component2][self.dataFrame.label == 0], self.dataFrame[component3][self.dataFrame.label == 0], c='blue', s=60)
@@ -222,12 +236,14 @@ class Clustering:
         returns: None
         
         """
+        # comparing the silhouette score
         if(self.silhouette_Model1 > self. silhouette_Model2):
             prediction=self.prediction_Model1
         else:
             prediction=self.prediction_Model2
-            
-        data_frame = self.dataFrame.drop(['CustomerID'],axis=1)
+        
+        # Bar plots for analysis
+        data_frame = self.dataFrame
         frame = pd.DataFrame(data_frame)
         frame['cluster'] = prediction
         frame.head()

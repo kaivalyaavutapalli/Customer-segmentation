@@ -10,7 +10,9 @@ customer data and assign each data point to clusters. Generally, the steps that 
 Preprocessing for K-means clustering 2)Building a K-means clustering algorithm 3) The metrics
 used for evaluating the performance of a clustering model 4) Visualizing the clusters built. The code in this package
 represents all the steps in customer segmentation, in which the parameters can be modified according to the 
-user requirements.
+user requirements. 
+   
+We are testing the code using Main.py where all the functions in Clustering.py are invoked.
 
 # Dataset
 

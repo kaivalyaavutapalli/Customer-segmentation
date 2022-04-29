@@ -20,7 +20,7 @@ class Analysis:
         # Converting categorical data to numeric
         DataFrame['Gender']=DataFrame['Gender'].replace(['Male', 'Female'],[0,1])
     
-       # Specify range for clusters as  min_range and max_range
+        # Specify range for clusters as  min_range and max_range
         min_range=2
         max_range=10
         
@@ -42,7 +42,7 @@ class Analysis:
         Optimal_Clusters=obj1.optimal_number_of_clusters(inertia_Score)
         print("Number of optimal clusters is : "+ str(Optimal_Clusters))
         
-        # invoking clustermodel1 with different combinations of data for segmentation
+        # invoking clustermodel1 for segmentation
         obj1.ClusterModel1()
         
         # specify the number of components for cluster model2
@@ -56,11 +56,11 @@ class Analysis:
         component2="Annual Income (k$)"
         component3= "Spending Score (1-100)"
         
-        # printing clusters
+        # printing the clusters
         obj1.plots_Clusters(component1,component2,component3)
         
-        # printing bar plots for analysis
+        # printing bar plots for cluster analysis
         obj1.plots_Analysis(component1,component2,component3)
         
-    # invoking mall_customers function for segmentation of mall customers    
+    # invoking mall_customers function for segmentation of mall customers dataset    
     mall_customers()
